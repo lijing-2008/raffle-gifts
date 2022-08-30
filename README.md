@@ -6,7 +6,6 @@
     <a href="https://blog.rust-lang.org/2022/07/19/Rust-1.62.1.html"><img alt="Rust Version" src="https://img.shields.io/badge/rust-1.62%2B-blue" /></a>  
   </div>
 
-
 ## 🍻 Features
 
 - Frontend built with React + Vite + unocss + Antd
@@ -20,11 +19,11 @@
   - SSR
 - Odds of winning
 
-| NEAR Cost |  N   |  R   |  SR  | SSR  |
-| :-------: | :--: | :--: | :--: | :--: |
-|   0.1 Ⓝ   | 40%  | 30%  | 25%  |  5%  |
-|   0.2 Ⓝ   | 25%  | 35%  | 30%  | 10%  |
-|   0.5 Ⓝ   | 10%  | 40%  | 35%  | 15%  |
+| NEAR Cost |  N  |  R  | SR  | SSR |
+| :-------: | :-: | :-: | :-: | :-: |
+|   0.1 Ⓝ   | 40% | 30% | 25% | 5%  |
+|   0.2 Ⓝ   | 25% | 35% | 30% | 10% |
+|   0.5 Ⓝ   | 10% | 40% | 35% | 15% |
 
 ## 🧸 Installation
 
@@ -56,9 +55,8 @@ At first, you need to connect to your NEAR wallet just by click the login button
 
 ![login.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5olzdi35dj217r0u0ach.jpg)
 
-
-
 ### 🌴 Mint NFTs
+
 You need to login with administrator account id
 
 ![admin.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5om0mkar9j21530u0q6r.jpg)
@@ -72,6 +70,12 @@ You need to login with regular user account id
 ![regularuser.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5oma38xknj21bp0u0gqf.jpg)
 
 Make your choise how much would you spend to raffle NFTs, the most recently raffle NFT will show on your right side, and all your NTFs will show.
+
+### ✌️ Transfer NFTs
+
+You can transfer your NFT to anyone else, but the owner must be yourself.
+![transferNFT.png](https://img1.imgtp.com/2022/08/30/rglaOclV.png)
+when your cursor hover the NFT you will get a tooltip, which show you some details, and offer the ability to transfer your NFT, you just need to input the account name who you want to transfer to.
 
 ## 🥷🏻 Just enjoy yourself
 
