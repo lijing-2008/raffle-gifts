@@ -2,7 +2,8 @@ use crate::*;
 
 pub trait NonFungibleTokenCore {
     //transfers an NFT to a receiver ID
-    fn nft_transfer(&mut self);
+    fn nft_raffle(&mut self);
+    fn nft_transfer(&mut self, receiver_id: AccountId, token_id: TokenId);
     fn nft_token(&self, token_id: TokenId) -> Option<JsonToken>;
 }
 
@@ -10,8 +11,8 @@ pub trait NonFungibleTokenCore {
 impl NonFungibleTokenCore for Contract {
     //implementation of the nft_transfer method. This transfers the NFT from the current owner to the receiver.
     #[payable]
-    fn nft_transfer(&mut self) {
-        assert_at_least_more_than_one_near();
+    fn nft_raffle(&mut self) {
+        assert_at_least_one_near();
         let raffle_id = env::predecessor_account_id();
         let attached_deposit = env::attached_deposit();
         let raffle_token_level = get_random_token_level_by_deposit(attached_deposit);
@@ -20,13 +21,20 @@ impl NonFungibleTokenCore for Contract {
             let raffle_token = get_random_token_id(&raffle_token_level_vector);
             if let Some(raffle_token) = raffle_token {
                 // transfer
-                self.internal_transfer(&raffle_id, &raffle_token.1, raffle_token.0);
+                self.internal_raffle(&raffle_id, &raffle_token.1, raffle_token.0);
             } else {
                 Promise::new(raffle_id).transfer(attached_deposit);
             }
         } else {
             Promise::new(raffle_id).transfer(attached_deposit);
         }
+    }
+
+    #[payable]
+    fn nft_transfer(&mut self, receiver_id: AccountId, token_id: TokenId) {
+        assert_one_yocto();
+        let sender_id = env::predecessor_account_id();
+        self.internal_transfer(&sender_id, &receiver_id, &token_id)
     }
 
     //get the information for a specific token ID

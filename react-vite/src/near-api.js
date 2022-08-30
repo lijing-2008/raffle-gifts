@@ -33,7 +33,7 @@ export async function initContract() {
         'nft_raffle_tokens_by_level',
       ],
       // Change methods can modify the state. But you don't receive the returned value when called.
-      changeMethods: ['nft_mint', 'nft_transfer'],
+      changeMethods: ['nft_mint', 'nft_raffle', 'nft_transfer'],
     }
   )
 }
@@ -103,7 +103,7 @@ export async function getNFTTokenByOwnerFromContract(
 }
 
 export async function raffleNFT(deposit) {
-  await window.contract.nft_transfer(
+  await window.contract.nft_raffle(
     {},
     '300000000000000', // attached GAS (optional)
     deposit // attached deposit in yoctoNEAR (optional)
@@ -118,5 +118,16 @@ export async function mintNft(metadata, tokenLevel) {
     },
     '300000000000000', // attached GAS (optional)
     ONE_NEAR // attached deposit in yoctoNEAR (optional)
+  )
+}
+
+export async function transferNFT(tokenID, receiverID) {
+  await window.contract.nft_transfer(
+    {
+      receiver_id: receiverID,
+      token_id: tokenID,
+    },
+    '300000000000000', // attached GAS (optional)
+    '1'
   )
 }

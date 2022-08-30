@@ -13,6 +13,7 @@
         "antd": "^4.22.8",
         "antd-img-crop": "^4.2.4",
         "buffer": "^6.0.3",
+        "dayjs": "^1.11.5",
         "near-api-js": "^1.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

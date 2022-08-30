@@ -37,15 +37,15 @@ pub(crate) fn refund_deposit(storage_used: u64) {
     }
 }
 // used to make sure the user attached exactly 1 yoctoNEAR
-// pub(crate) fn assert_one_near() {
-//     assert_eq!(
-//         env::attached_deposit(),
-//         ONE_NEAR,
-//         "Rqueries attached deposit of exactly 1 NEAR",
-//     )
-// }
+pub(crate) fn assert_one_yocto() {
+    assert_eq!(
+        env::attached_deposit(),
+        1,
+        "Rqueries attached deposit of exactly 1 yoctoNEAR",
+    )
+}
 // assert that the user has attached at least 1 yoctoNEAR(for security reasons and to pay for storage)
-pub(crate) fn assert_at_least_more_than_one_near() {
+pub(crate) fn assert_at_least_one_near() {
     assert!(
         env::attached_deposit() >= ONE_NEAR,
         "Requires attached deposit of at least 1 yoctoNEAR.",
@@ -145,7 +145,7 @@ impl Contract {
             .insert(&token_level, &raffle_token_vector);
     }
 
-    pub(crate) fn internal_transfer(
+    pub(crate) fn internal_raffle(
         &mut self,
         receiver_id: &AccountId,
         token_id: &TokenId,
@@ -201,5 +201,68 @@ impl Contract {
         env::log_str(&nft_transfer_log.to_string());
 
         token
+    }
+
+    pub(crate) fn internal_transfer(
+        &mut self,
+        sender_id: &AccountId,
+        receiver_id: &AccountId,
+        token_id: &TokenId,
+    ) {
+        // get the token object by passing token_id
+        let token = self.tokens_by_id.get(&token_id).expect("No token");
+        assert_eq!(
+            &token.owner_id, sender_id,
+            "sender id must equal to the owner id"
+        );
+
+        // remove the token from it's current owner's set
+        self.internal_remove_token_from_owner(&token.owner_id, token_id);
+        // add the token to the receiver
+        self.internal_add_token_to_owner(receiver_id, token_id);
+        // if the token'owner in admin, remove the token from raffle collection
+        let tokens_set = self
+            .raffle_tokens_per_level
+            .get(&token.level)
+            .expect("No token.");
+        let mut token_index = None;
+        for i in 0..tokens_set.len() {
+            if tokens_set.get(i).unwrap() == *token_id {
+                token_index = Some(i)
+            } else {
+                continue;
+            }
+        }
+        self.internal_remove_token_from_raffle(token_id, token_index.unwrap());
+
+        let new_token = Token {
+            owner_id: receiver_id.clone(),
+            level: token.clone().level,
+        };
+        self.tokens_by_id.insert(token_id, &new_token);
+
+        // Construct the transfer log as per the events standard.
+        let nft_transfer_log: EventLog = EventLog {
+            // Standard name ("nep171").
+            standard: NFT_STANDARD_NAME.to_string(),
+            // Version of the standard ("nft-1.0.0").
+            version: NFT_METADATA_SPEC.to_string(),
+            // The data related with the event stored in a vector.
+            event: EventLogVariant::NftTransfer(vec![NftTransferLog {
+                // The optional authorized account ID to transfer the token on behalf of the old owner.
+                authorized_id: Some(token.owner_id.to_string()),
+                // The old owner's account ID.
+                old_owner_id: token.owner_id.to_string(),
+                // The account ID of the new owner of the token.
+                new_owner_id: receiver_id.to_string(),
+                // A vector containing the token IDs as strings.
+                token_ids: vec![token_id.to_string()],
+                // An optional memo to include.
+                memo: None,
+            }]),
+        };
+
+        // Log the serialized json.
+        env::log_str(&nft_transfer_log.to_string());
     }
 }
