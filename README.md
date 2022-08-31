@@ -9,9 +9,9 @@
 
 <h4 align="center"> 
 	🚧 🚀 Under construction... 🚀 🚧
-</h4> 
+</h4>
 
-<hr> 
+<hr>
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -26,7 +26,7 @@
 
 ## :dart: About
 
-Welcome to Raffle Gifts, it is a NFT game inspired by Asphalt 8, and developed on NEAR Blockchain. The game offers two user roles. As an ministrator, you can mint NFTs into the prize poll. As a normal user, you can draw NFTs with spending some NEARs. 
+Welcome to Raffle Gifts, it is a NFT game inspired by Asphalt 8, and developed on NEAR Blockchain. The game offers two user roles. As an ministrator, you can mint NFTs into the prize poll. As a normal user, you can draw NFTs with spending some NEARs.
 
 ## :sparkles: Features
 
@@ -42,22 +42,22 @@ Welcome to Raffle Gifts, it is a NFT game inspired by Asphalt 8, and developed o
 
 :heavy_check_mark: Odds of winning
 
-| NEAR Cost |  N   |  R   |  SR  | SSR  |
-| :-------: | :--: | :--: | :--: | :--: |
-|   0.1 Ⓝ   | 40%  | 30%  | 25%  |  5%  |
-|   0.2 Ⓝ   | 25%  | 35%  | 30%  | 10%  |
-|   0.5 Ⓝ   | 10%  | 40%  | 35%  | 15%  |
+| NEAR Cost |  N  |  R  | SR  | SSR |
+| :-------: | :-: | :-: | :-: | :-: |
+|   0.1 Ⓝ   | 40% | 30% | 25% | 5%  |
+|   0.2 Ⓝ   | 25% | 35% | 30% | 10% |
+|   0.5 Ⓝ   | 10% | 40% | 35% | 15% |
 
 ## :rocket: Technologies
 
-- [NEAR]([Welcome to NEAR | NEAR Documentation](https://docs.near.org/))
-- [Rust]([Rust 程序设计语言 (rust-lang.org)](https://www.rust-lang.org/zh-CN/))
+- [NEAR](https://docs.near.org/)
+- [Rust](https://www.rust-lang.org/zh-CN/)
 - [React](https://pt-br.reactjs.org/)
-- [Vite]([Vite | 下一代的前端工具链 (vitejs.dev)](https://cn.vitejs.dev/))
-- [Unocss]([unocss/unocss: The instant on-demand atomic CSS engine. (github.com)](https://github.com/unocss/unocss))
-- [Antd]([Ant Design - 一套企业级 UI 设计语言和 React 组件库](https://ant.design/index-cn))
+- [Vite](https://cn.vitejs.dev/)
+- [Unocss](https://github.com/unocss/unocss)
+- [Antd](https://ant.design/index-cn)
 
-## :white_check_mark: Requirements ##
+## :white_check_mark: Requirements
 
 Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [Node](https://nodejs.org/en/) installed.
 
@@ -73,6 +73,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [
 # Compile WASM file
 cd nft-contract
 ./build.sh
+
 # Deploy
 export NFT_CONTRACT_ID=Your_Account_id
 near deploy --wasmFile res/main.wasm --accountId $NFT_CONTRACT_ID --nodeUrl https://public-rpc.blockpi.io/http/near-testnet
@@ -85,8 +86,6 @@ cd react-vite
 npm install
 npm run dev
 ```
-
-
 
 ## :tada: Usage
 
@@ -125,16 +124,16 @@ You can view your Account Balance Details when hover the avatar.
 ![avatarinfo.png](https://img1.imgtp.com/2022/08/31/0j5nuEkm.png)
 
 For now, show you some basic information below:
+
 - total
 - available
 - stateStaked
 - staked
 - total NFTs (owned by your account)
 
-## :memo: License ##
+## :memo: License
 
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
-
 
 Made with :heart: by <a href="https://github.com/lijing-2008" target="_blank">Crazy Coder LJ</a>
 
