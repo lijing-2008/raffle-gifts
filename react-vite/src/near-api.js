@@ -51,6 +51,10 @@ export function signInWithNearWallet() {
   // the private key in localStorage.
   window.walletConnection.requestSignIn(nearConfig.contractName)
 }
+export async function getAccountBalance() {
+  let amount = await window.walletConnection.account().getAccountBalance()
+  return amount
+}
 
 export async function isAdmin() {
   let response = await window.contract.is_admin({

@@ -15,9 +15,7 @@ export default function ListShow(props) {
   const onChange = () => {
     setCollapse(!collapse)
   }
-  const data = collapse
-    ? listData.slice(listData.length - 4, listData.length)
-    : listData
+  const data = collapse ? listData.slice(0, 4) : listData
   const collapseInfo = collapse ? (
     <div className="text-xm font-semibold italic text-pink">
       展开全部

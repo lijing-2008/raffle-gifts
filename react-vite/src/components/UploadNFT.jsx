@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Form, Input, Select } from 'antd'
+import { Form, Input, Select, message } from 'antd'
 import { makeGatewayURL, jsonFile } from '../util/utils'
 import { mintNft } from '../near-api'
 const { Option } = Select
@@ -38,7 +38,7 @@ const defaultMetadata = {
   reference_hash: '',
 }
 export default function UploadNFT(props) {
-  const [fileUrl, updateFileUrl] = useState(``)
+  const [fileUrl, updateFileUrl] = useState('')
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
   const { total } = props
@@ -62,17 +62,19 @@ export default function UploadNFT(props) {
         setCid(rootCid)
       },
       onStoredChunk: (bytes) => {
-        console.log(`> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`)
-        const url = makeGatewayURL(cid, 'metadata.json')
-        console.log(url)
+        message.success(
+          `upload file ${
+            file.name
+          } successfully,  sent ${bytes.toLocaleString()} bytes to web3.storage`,
+          6
+        )
       },
     })
 
     const url = makeGatewayURL(rootCid, 'metadata.json')
     const res = await fetch(url)
-    console.log(url)
+    console.log('res', res)
     const metadata = await res.json()
-    console.log(metadata)
     const gatewayURL = makeGatewayURL(rootCid, metadata.path)
     updateFileUrl(gatewayURL)
   }
@@ -101,12 +103,7 @@ export default function UploadNFT(props) {
     }
     console.log(metadata)
     const tokenLevel = form.getFieldValue('level')
-    // setTimeout(() => {
-    //   console.log('3s later')
-    // }, 3000)
     await mintNft(metadata, tokenLevel)
-
-    // form.resetFields()
   }
 
   const onReset = () => {
@@ -124,8 +121,8 @@ export default function UploadNFT(props) {
     <>
       <div className="max-w-3xl flex relative m-auto">
         <div className="z-0 bg-white opacity-20 w-full h-600px rounded-xl border-2 border-black shadow-dark-300"></div>
-        <div className="absolute w-300px h-50px top-50px left-250px text-2xl font-semibold italic">
-          Mint NFT ( 历史合计: {<i className="text-pink">{total}</i>} )
+        <div className="absolute w-330px h-50px top-50px left-210px text-2xl font-semibold italic">
+          Mint NFT ( 历史Mint合计: {<i className="text-pink">{total}</i>} )
         </div>
         <div className="absolute w-240px h-240px left-50px top-180px bg-gray-400">
           {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
@@ -188,7 +185,6 @@ export default function UploadNFT(props) {
             <Form.Item {...tailLayout}>
               <button
                 className="transition duration-700 ease-in-out w-100px ml-2 mr-4 bg-pink-400 border-0 rounded-xl shadow-black hover:bg-red-400 hover:scale-110 cursor-pointer"
-                htmlType="button"
                 onClick={onReset}
               >
                 Reset
@@ -196,7 +192,6 @@ export default function UploadNFT(props) {
               <button
                 className="transition duration-700 ease-in-out w-100px bg-blue-400 border-0 rounded-xl shadow-black hover:bg-blue-600 hover:scale-110 cursor-pointer"
                 type="dashed"
-                htmlType="button"
                 onClick={onFill}
               >
                 Fill default
@@ -204,7 +199,6 @@ export default function UploadNFT(props) {
               <br />
               <button
                 className="transition duration-700 ease-in-out m-4 w-50 h-10 rounded-full border-0 shadow-xl bg-purple-400 cursor-pointer text-xl italic font-bold hover:bg-red-600 hover:scale-110"
-                htmlType="button"
                 onClick={onMint}
               >
                 Mint

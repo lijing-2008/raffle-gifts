@@ -2,14 +2,21 @@ import React from 'react'
 
 export default function Banner(props) {
   const { accountId, onHandleLogout } = props
+  const onClick = () => {
+    window.open('')
+  }
   return (
-    <div className="z-40 flex flex-between h-15 bg-pink-600">
+    <div className="fixed top-0 left-0 right-0 z-40 flex flex-between h-50px bg-pink-600">
       <div className="flex flex-1 justify-center items-center text-gray-300">
         <div className="text-xl flex">
           Welcome
-          <div className="px-4 font-semibold text-white underline italic">
+          <a
+            className="px-4 font-semibold text-white underline italic"
+            href="https://wallet.testnet.near.org"
+            target="_blank"
+          >
             {accountId}
-          </div>{' '}
+          </a>{' '}
           ! Challenge your luck !
         </div>
       </div>

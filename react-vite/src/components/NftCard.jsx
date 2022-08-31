@@ -8,7 +8,7 @@ const getTime = (unixTime) => {
   return dayjs(unixTime).format('YYYY-MM-DD HH:mm:ss')
 }
 export default function NftCard(props) {
-  const [name, setName] = useState()
+  const [name, setName] = useState('')
   const { item } = props
   const onTransfer = () => {
     transferNFT(item.token_id, `${name}.testnet`)
@@ -36,7 +36,6 @@ export default function NftCard(props) {
           />
           <button
             className="transition duration-700 ease-in-out m-4 w-50 h-10 rounded-full border-0 shadow-xl bg-purple-400 cursor-pointer text-xl italic font-bold hover:bg-red-600 hover:scale-110"
-            htmlType="button"
             onClick={onTransfer}
           >
             transfer!
