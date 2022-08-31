@@ -79,6 +79,19 @@ You can transfer your NFT to anyone else, but the owner must be yourself.
 
 when your cursor hover the NFT you will get a tooltip, which show you some details, and offer the ability to transfer your NFT, you just need to input the account name who you want to transfer to.
 
+### 🌈 View Account details
+
+You can view your Account Balance Details when hover the avatar.
+
+![avatarinfo.png](https://img1.imgtp.com/2022/08/31/0j5nuEkm.png)
+
+For now, show you some basic information below:
+- total
+- available
+- stateStaked
+- staked
+- total NFTs (owned by your account)
+
 ## 🥷🏻 Just enjoy yourself
 
 You can deploy the contract in your account, and play with it!
