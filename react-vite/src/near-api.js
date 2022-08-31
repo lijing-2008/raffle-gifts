@@ -31,6 +31,7 @@ export async function initContract() {
         'nft_supply_for_owner',
         'nft_tokens_for_owner',
         'nft_raffle_tokens_by_level',
+        'nft_raffle_total_by_level',
       ],
       // Change methods can modify the state. But you don't receive the returned value when called.
       changeMethods: ['nft_mint', 'nft_raffle', 'nft_transfer'],
@@ -72,6 +73,18 @@ export async function getNFTTokensFromContract(fromIndex, limit) {
 export async function getNFTTokenByIdFromContract(tokenId) {
   let response = await window.contract.nft_token({
     token_id: tokenId,
+  })
+  return response
+}
+export async function getNFTTokenSupplyByOwner() {
+  let response = await window.contract.nft_supply_for_owner({
+    account_id: window.accountId,
+  })
+  return response
+}
+export async function getRaffleTokensTotalByLevel(level) {
+  let response = await window.contract.nft_raffle_total_by_level({
+    level,
   })
   return response
 }

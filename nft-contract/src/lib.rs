@@ -116,3 +116,86 @@ impl Contract {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::vec;
+
+    use near_sdk::{test_utils::VMContextBuilder, testing_env};
+
+    use super::*;
+
+    const TESTACCOUNTID: &str = "test.testnet";
+    const NEAR: u128 = 1000000000000000000000000;
+
+    #[test]
+    fn initializes() {
+        let metadata = NFTContractMetadata {
+            spec: "nft-1.0.0".to_string(),
+            name: "Raffle gifts Contract".to_string(),
+            symbol: "RaffleGifts".to_string(),
+            icon: None,
+            base_uri: None,
+            reference: None,
+            reference_hash: None,
+        };
+        let contract = Contract::new(TESTACCOUNTID.parse().unwrap(), metadata);
+        assert_eq!(contract.owner_id, TESTACCOUNTID.parse().unwrap());
+    }
+
+    #[test]
+    fn mint_nft() {
+        let nft_metadata = NFTContractMetadata {
+            spec: "nft-1.0.0".to_string(),
+            name: "Raffle gifts Contract".to_string(),
+            symbol: "RaffleGifts".to_string(),
+            icon: None,
+            base_uri: None,
+            reference: None,
+            reference_hash: None,
+        };
+        let mut contract = Contract::new(TESTACCOUNTID.parse().unwrap(), nft_metadata);
+        set_context(TESTACCOUNTID, 1 * NEAR);
+        let token_metadata1 = TokenMetadata {
+            title: Some("default title1".to_string()),
+            description: Some("an special NFT".to_string()),
+            media: Some("".to_string()),
+            media_hash: Some(Base64VecU8::from(vec![])),
+            copies: Some(1),
+            issued_at: Some(1),
+            expires_at: Some(1),
+            starts_at: Some(1),
+            updated_at: Some(1),
+            extra: Some("".to_string()),
+            reference: Some("".to_string()),
+            reference_hash: Some(Base64VecU8::from(vec![])),
+        };
+
+        //mint_nft*2
+        contract.nft_mint(token_metadata1, "SSR".to_string());
+        let token_set = contract
+            .tokens_per_owner
+            .get(&(TESTACCOUNTID.parse().unwrap()))
+            .unwrap();
+        // println!("{:?}", token_set);
+        assert!(!token_set.is_empty(), "token_set should not be empty");
+        assert_eq!(token_set.len(), 1);
+        let ssr_raffle_set = contract
+            .raffle_tokens_per_level
+            .get(&("SSR".to_string()))
+            .unwrap();
+        assert_eq!(ssr_raffle_set.len(), 1);
+
+        let sr_raffle_set = contract.raffle_tokens_per_level.get(&("SR".to_string()));
+        assert!(sr_raffle_set.is_none());
+
+        //
+    }
+
+    fn set_context(predecessor: &str, amount: Balance) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor.parse().unwrap());
+        builder.attached_deposit(amount);
+        testing_env!(builder.build());
+    }
+}

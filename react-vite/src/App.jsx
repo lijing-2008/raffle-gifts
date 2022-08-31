@@ -5,10 +5,12 @@ import ListShow from './components/ListShow'
 import NftCard from './components/NftCard'
 import SignIn from './components/SignIn'
 import UploadNFT from './components/UploadNFT'
-// import NftCard from './NftCard'
 import {
   getNFTTokenByLevelFromContract,
   getNFTTokenByOwnerFromContract,
+  getNFTTokenSupplyByOwner,
+  getRaffleTokensTotalByLevel,
+  getTotalSupply,
   isAdmin,
   signOutNearWallet,
 } from './near-api'
@@ -37,19 +39,37 @@ function App() {
   const [listForOwnerFromBlockchain, setListForOwnerFromBlockchain] = useState([
     raffleData,
   ])
+  const [totalByOwner, setTotalByOwner] = useState(0)
+
+  const [total, setTotal] = useState(0)
+  const [nTotal, setNTotal] = useState(0)
+  const [rTotal, setRTotal] = useState(0)
+  const [srTotal, setSRTotal] = useState(0)
+  const [ssrTotal, setSSRTotal] = useState(0)
+
   const [enableMint, setEnableMint] = useState(false)
   useEffect(() => {
-    getNFTTokenByOwnerFromContract(window.accountId, '0', 20)
+    getNFTTokenSupplyByOwner().then(setTotalByOwner).catch(alert)
+    getNFTTokenByOwnerFromContract(window.accountId, '0', 40)
       .then(setListForOwnerFromBlockchain)
       .catch(alert)
   }, [])
   useEffect(() => {
-    getNFTTokenByLevelFromContract('0', 4, 'N').then(setListLevelN).catch(alert)
-    getNFTTokenByLevelFromContract('0', 4, 'R').then(setListLevelR).catch(alert)
-    getNFTTokenByLevelFromContract('0', 4, 'SR')
+    getTotalSupply().then(setTotal).catch(alert)
+    getRaffleTokensTotalByLevel('N').then(setNTotal).catch(alert)
+    getRaffleTokensTotalByLevel('R').then(setRTotal).catch(alert)
+    getRaffleTokensTotalByLevel('SR').then(setSRTotal).catch(alert)
+    getRaffleTokensTotalByLevel('SSR').then(setSSRTotal).catch(alert)
+    getNFTTokenByLevelFromContract('0', 40, 'N')
+      .then(setListLevelN)
+      .catch(alert)
+    getNFTTokenByLevelFromContract('0', 40, 'R')
+      .then(setListLevelR)
+      .catch(alert)
+    getNFTTokenByLevelFromContract('0', 40, 'SR')
       .then(setListLevelSR)
       .catch(alert)
-    getNFTTokenByLevelFromContract('2', 6, 'SSR')
+    getNFTTokenByLevelFromContract('0', 40, 'SSR')
       .then(setListLevelSSR)
       .catch(alert)
   }, [])
@@ -75,7 +95,9 @@ function App() {
       {/* <button onClick={onTest}>test function</button> */}
 
       <div className="max-w-6xl m-auto ">
-        <div className="mt-5">{enableMint ? <UploadNFT /> : ''}</div>
+        <div className="mt-5">
+          {enableMint ? <UploadNFT total={total} /> : ''}
+        </div>
         {enableMint ? (
           ''
         ) : (
@@ -105,13 +127,30 @@ function App() {
             <ListShow
               listTitle="我的NFT"
               listData={listForOwnerFromBlockchain}
+              total={totalByOwner}
             />
           )}
 
-          <ListShow listTitle="NFT藏品一览(SSR)" listData={listLevelSSR} />
-          <ListShow listTitle="NFT藏品一览(SR)" listData={listLevelSR} />
-          <ListShow listTitle="NFT藏品一览(R)" listData={listLevelR} />
-          <ListShow listTitle="NFT藏品一览(N)" listData={listLevelN} />
+          <ListShow
+            listTitle="NFT藏品一览(SSR)"
+            listData={listLevelSSR}
+            total={ssrTotal}
+          />
+          <ListShow
+            listTitle="NFT藏品一览(SR)"
+            listData={listLevelSR}
+            total={srTotal}
+          />
+          <ListShow
+            listTitle="NFT藏品一览(R)"
+            listData={listLevelR}
+            total={rTotal}
+          />
+          <ListShow
+            listTitle="NFT藏品一览(N)"
+            listData={listLevelN}
+            total={nTotal}
+          />
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import 'uno.css'
 import { initContract } from './near-api'
 const reactRoot = createRoot(document.querySelector('#root'))
 import { Buffer } from 'buffer'
-globalThis.Buffer = Buffer
+window.Buffer = Buffer
 
 window.nearInitPromise = initContract()
   .then(() => {

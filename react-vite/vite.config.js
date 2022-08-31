@@ -9,11 +9,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       plugins: [inject({ Buffer: ['buffer', 'Buffer'] })],
+      output: {},
     },
+    chunkSizeWarningLimit: 1000,
+    // commonjsOptions: {
+    //   include: [],
+    // },
   },
   define: {
     'process.env': {},
   },
+  //   optimizeDeps: {
+  //     disabled: false,
+  //   },
 })
 
 //inject({ Buffer: ['buffer', 'Buffer'] })

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Button, Form, Input, Select, Upload } from 'antd'
-import ImgCrop from 'antd-img-crop'
+import { Form, Input, Select } from 'antd'
 import { makeGatewayURL, jsonFile } from '../util/utils'
 import { mintNft } from '../near-api'
 const { Option } = Select
@@ -38,10 +37,11 @@ const defaultMetadata = {
   reference: '',
   reference_hash: '',
 }
-export default function UploadNFT() {
+export default function UploadNFT(props) {
   const [fileUrl, updateFileUrl] = useState(``)
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
+  const { total } = props
 
   const [form] = Form.useForm()
 
@@ -124,8 +124,8 @@ export default function UploadNFT() {
     <>
       <div className="max-w-3xl flex relative m-auto">
         <div className="z-0 bg-white opacity-20 w-full h-600px rounded-xl border-2 border-black shadow-dark-300"></div>
-        <div className="absolute w-300px h-50px top-50px left-290px text-3xl font-semibold italic">
-          Mint NFT
+        <div className="absolute w-300px h-50px top-50px left-250px text-2xl font-semibold italic">
+          Mint NFT ( 历史合计: {<i className="text-pink">{total}</i>} )
         </div>
         <div className="absolute w-240px h-240px left-50px top-180px bg-gray-400">
           {fileUrl && <img src={fileUrl} width="240px" height="240px" />}

@@ -91,4 +91,19 @@ impl Contract {
                 .collect()
         }
     }
+
+    pub fn nft_raffle_total_by_level(&self, level: TokenLevel) -> u64 {
+        let tokens_for_raffle_vector =
+            self.raffle_tokens_per_level.get(&level).unwrap_or_else(|| {
+                // if the level doesn't have any tokens, we create a new vector
+                Vector::new(
+                    StorageKey::RaffleTokensPerLevelInner {
+                        level_hash: hash_level(&level),
+                    }
+                    .try_to_vec()
+                    .unwrap(),
+                )
+            });
+        tokens_for_raffle_vector.len()
+    }
 }
