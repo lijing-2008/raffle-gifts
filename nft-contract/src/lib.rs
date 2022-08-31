@@ -171,7 +171,7 @@ mod tests {
             reference_hash: Some(Base64VecU8::from(vec![])),
         };
 
-        //mint_nft*2
+        //mint_nft
         contract.nft_mint(token_metadata1, "SSR".to_string());
         let token_set = contract
             .tokens_per_owner
@@ -188,6 +188,7 @@ mod tests {
 
         let sr_raffle_set = contract.raffle_tokens_per_level.get(&("SR".to_string()));
         assert!(sr_raffle_set.is_none());
+
 
         //
     }
