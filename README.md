@@ -59,7 +59,7 @@ At first, you need to connect to your NEAR wallet just by click the Connect Wall
 
 You need to login with administrator account id
 
-![admin.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5om0mkar9j21530u0q6r.jpg)
+![admin.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5pq16m4dyj20yl0u0wiu.jpg)
 
 Select your NFT image from local directory, its media url will input automatically. Then input other necessary info. At last, click the Mint button to redirect to connect your wallet and confirm your transaction.
 
@@ -67,7 +67,7 @@ Select your NFT image from local directory, its media url will input automatical
 
 You need to login with regular user account id
 
-![regularuser.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5oma38xknj21bp0u0gqf.jpg)
+![regularuser.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5pq0t0sdfj214n0u0tdr.jpg)
 
 Make your choise how much would you spend to raffle NFTs, the most recently raffle NFT will show on your right side, and all your NTFs will show.
 
@@ -75,7 +75,7 @@ Make your choise how much would you spend to raffle NFTs, the most recently raff
 
 You can transfer your NFT to anyone else, but the owner must be yourself.
 
-![transferNFT.png](https://img1.imgtp.com/2022/08/30/rglaOclV.png)
+![transferNFT.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5pq1u6j7qj21470u0dls.jpg)
 
 when your cursor hover the NFT you will get a tooltip, which show you some details, and offer the ability to transfer your NFT, you just need to input the account name who you want to transfer to.
 
