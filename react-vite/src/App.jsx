@@ -116,7 +116,13 @@ function App() {
         {/* <button onClick={onTest}>test function</button> */}
         <div className="mt-15">
           {enableMint === 1 ? (
-            <UploadNFT total={total} nTotal={nTotal} rTotal={rTotal} srTotal={srTotal} ssrTotal={ssrTotal} />
+            <UploadNFT
+              total={total}
+              nTotal={nTotal}
+              rTotal={rTotal}
+              srTotal={srTotal}
+              ssrTotal={ssrTotal}
+            />
           ) : (
             ''
           )}
@@ -133,13 +139,17 @@ function App() {
               <div className="pl-6 text-blue italic font-semibold">
                 the most recently raffle gift
               </div>
-              <NftCard
-                item={
-                  listForOwnerFromBlockchain[
-                    listForOwnerFromBlockchain.length - 1
-                  ]
-                }
-              />
+              {listForOwnerFromBlockchain.length > 0 ? (
+                <NftCard
+                  item={
+                    listForOwnerFromBlockchain[
+                      listForOwnerFromBlockchain.length - 1
+                    ]
+                  }
+                />
+              ) : (
+                ''
+              )}
             </div>
           </div>
         )}

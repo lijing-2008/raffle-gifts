@@ -10,13 +10,14 @@ const getTime = (unixTime) => {
 export default function NftCard(props) {
   const [name, setName] = useState('')
   const { item } = props
+
   const onTransfer = () => {
     transferNFT(item.token_id, `${name}.testnet`)
   }
   const onChange = (e) => {
     setName(e.target.value)
   }
-  const content = (
+  const content = item ? (
     <div className="flex flex-col items-center">
       <p className="italic font-bold text-xm text-white">Description</p>
       <p className="font-semibold text-xm">{item.metadata.description}</p>
@@ -45,6 +46,8 @@ export default function NftCard(props) {
         ''
       )}
     </div>
+  ) : (
+    ''
   )
   return (
     <>
