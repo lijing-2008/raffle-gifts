@@ -97,7 +97,7 @@ At first, you need to connect to your NEAR wallet just by click the Connect Wall
 
 You need to login with administrator account id
 
-![admin.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5pq16m4dyj20yl0u0wiu.jpg)
+![mintNFT.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5qvoeo90vj21440u0q7i.jpg)
 
 Select your NFT image from local directory, its media url will input automatically. Then input other necessary info. At last, click the Mint button to redirect to connect your wallet and confirm your transaction.
 
@@ -105,7 +105,7 @@ Select your NFT image from local directory, its media url will input automatical
 
 You need to login with regular user account id
 
-![regularuser.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5pq0t0sdfj214n0u0tdr.jpg)
+![raffleNFT.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5qvot2p5yj218a0u0dl8.jpg)
 
 Make your choise how much would you spend to raffle NFTs, the most recently raffle NFT will show on your right side, and all your NTFs will show.
 
@@ -117,13 +117,13 @@ You can transfer your NFT to anyone else, but the owner must be yourself.
 
 when your cursor hover the NFT you will get a tooltip, which show you some details, and offer the ability to transfer your NFT, you just need to input the account name who you want to transfer to.
 
-### 🌈 View Account details
+### 🌈 Account Management
 
-You can view your Account Balance Details when hover the avatar.
+You can view your Account Balance Details when hover the avatar, and you can logout by click the logout button. If you are the contract owner, you will see a button named "Manage admins", click it to manage Administrators, you can add and delete administrator for now.
 
-![avatarinfo.png](https://img1.imgtp.com/2022/08/31/0j5nuEkm.png)
+![userManage.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5qvqknuyxj225p0u0jwy.jpg)
 
-For now, show you some basic information below:
+For now, Account details contain below:
 
 - total
 - available
