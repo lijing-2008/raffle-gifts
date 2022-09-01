@@ -115,7 +115,11 @@ function App() {
       <div className="max-w-6xl m-auto mt-50px">
         {/* <button onClick={onTest}>test function</button> */}
         <div className="mt-15">
-          {enableMint === 1 ? <UploadNFT total={total} /> : ''}
+          {enableMint === 1 ? (
+            <UploadNFT total={total} nTotal={nTotal} rTotal={rTotal} srTotal={srTotal} ssrTotal={ssrTotal} />
+          ) : (
+            ''
+          )}
         </div>
         {enableMint === 1 ? (
           ''

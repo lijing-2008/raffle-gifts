@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Form, Input, Select, message } from 'antd'
+import { Form, Input, Select, message, Statistic, Divider } from 'antd'
 import { makeGatewayURL, jsonFile } from '../util/utils'
 import { mintNft } from '../near-api'
+import CustomStatistic from './CustomStatistic'
 const { Option } = Select
 const layout = {
   labelCol: {
@@ -41,7 +42,7 @@ export default function UploadNFT(props) {
   const [fileUrl, updateFileUrl] = useState('')
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
-  const { total, admins } = props
+  const { total, nTotal, rTotal, srTotal, ssrTotal } = props
 
   const [form] = Form.useForm()
 
@@ -121,90 +122,105 @@ export default function UploadNFT(props) {
     <>
       <div className="max-w-2xl flex relative m-auto">
         <div className="z-0 mt-3 bg-white opacity-20 w-full h-460px rounded-xl border-2 border-black shadow-dark-300"></div>
-        <div className="absolute w-330px h-50px top-20px left-180px text-2xl font-semibold italic">
-          Mint NFT ( 历史Mint合计: {<i className="text-pink">{total}</i>} )
-        </div>
-        <div className="absolute w-240px h-240px left-30px top-80px bg-gray-400">
-          {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
-        </div>
-        <div className="absolute w-240px h-100px left-30px top-340px ">
-          <input className="bg-gray w-240px" type="file" onChange={onChange} />
-        </div>
-        <div className="absolute z-10 w-350px h-400px left-300px top-80px">
-          <Form {...layout} s form={form} name="control-hooks">
-            <Form.Item
-              name="title"
-              label="Title"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="level"
-              label="Level"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Select placeholder="Select level" allowClear>
-                <Option value="SSR">SSR</Option>
-                <Option value="SR">SR</Option>
-                <Option value="R">R</Option>
-                <Option value="N">N</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name="description"
-              label="Discription"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input.TextArea />
-            </Form.Item>
-            <Form.Item
-              name="mediaUrl"
-              label="mediaUrl"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input.TextArea />
-            </Form.Item>
 
-            <Form.Item {...tailLayout}>
-              <button
-                className="transition duration-700 ease-in-out w-100px ml-2 mr-4 bg-pink-400 border-0 rounded-xl shadow-black hover:bg-red-400 hover:scale-110 cursor-pointer"
-                onClick={onReset}
-              >
-                Reset
-              </button>
-              <button
-                className="transition duration-700 ease-in-out w-100px bg-blue-400 border-0 rounded-xl shadow-black hover:bg-blue-600 hover:scale-110 cursor-pointer"
-                type="dashed"
-                onClick={onFill}
-              >
-                Fill default
-              </button>
-              <br />
-              <button
-                className="transition duration-700 ease-in-out m-4 w-50 h-10 rounded-full border-0 shadow-xl bg-purple-400 cursor-pointer text-xl italic font-bold hover:bg-red-600 hover:scale-110"
-                onClick={onMint}
-              >
-                Mint
-              </button>
-            </Form.Item>
-          </Form>
+        <div className="absolute flex flex-between justify-center gap-x-10 w-400px h-50px top-20px left-150px italic">
+          <CustomStatistic title="Total Mint" value={total} />
+          <CustomStatistic
+            title="Total Transfered"
+            value={total - nTotal - rTotal - srTotal - ssrTotal}
+          />
+          <CustomStatistic title="Total SSR" value={ssrTotal} />
+        </div>
+        <div className="absolute z-5 top-60px w-4/5 left-70px">
+          <Divider className="bg-gray-400" />
+        </div>
+        <div className="absolute flex justify-betweens w-full h-350px top-100px ">
+          <div className="ml-8">
+            <div className=" w-240px h-240px bg-gray bg-[url(./src/assets/default.png)]">
+              {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
+            </div>
+            <div className=" w-240px h-100px mt-4 pl-8">
+              <input type="file" onChange={onChange} />
+            </div>
+          </div>
+          <div className="ml-4">
+            <div className="z-10 w-350px h-400px ">
+              <Form {...layout} s form={form} name="control-hooks">
+                <Form.Item
+                  name="title"
+                  label="Title"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="level"
+                  label="Level"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Select placeholder="Select level" allowClear>
+                    <Option value="SSR">SSR</Option>
+                    <Option value="SR">SR</Option>
+                    <Option value="R">R</Option>
+                    <Option value="N">N</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name="description"
+                  label="Discription"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="mediaUrl"
+                  label="mediaUrl"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item {...tailLayout}>
+                  <button
+                    className="transition duration-700 ease-in-out w-100px ml-2 mr-4 bg-pink-400 border-0 rounded-xl shadow-black hover:bg-red-400 hover:scale-110 cursor-pointer"
+                    onClick={onReset}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    className="transition duration-700 ease-in-out w-100px bg-blue-400 border-0 rounded-xl shadow-black hover:bg-blue-600 hover:scale-110 cursor-pointer"
+                    type="dashed"
+                    onClick={onFill}
+                  >
+                    Fill default
+                  </button>
+                  <br />
+                  <button
+                    className="transition duration-700 ease-in-out m-4 w-50 h-10 rounded-full border-0 shadow-xl bg-purple-400 cursor-pointer text-xl italic font-bold hover:bg-red-600 hover:scale-110"
+                    onClick={onMint}
+                  >
+                    Mint
+                  </button>
+                </Form.Item>
+              </Form>
+            </div>
+          </div>
         </div>
       </div>
     </>
