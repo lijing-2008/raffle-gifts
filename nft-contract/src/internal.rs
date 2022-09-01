@@ -1,5 +1,18 @@
 use crate::Contract;
 use crate::*;
+use std::mem::size_of;
+
+// calculate how many bytes the account ID is taking up
+pub(crate) fn bytes_for_account_id(account_id: &AccountId) -> u64 {
+    // the extra 4 bytes are coming from Borsh serialization to store the lenth of the string
+    account_id.as_str().len() as u64 + 4 + size_of::<u64>() as u64
+}
+
+// refund removed account storage and send the funds to the passed in account ID
+pub(crate) fn refund_account_id(account_id: AccountId, removed_account_id: AccountId) -> Promise {
+    let storage_released: u64 = bytes_for_account_id(&removed_account_id);
+    Promise::new(account_id).transfer(Balance::from(storage_released) * env::storage_byte_cost())
+}
 
 // calculate hash
 pub(crate) fn hash_account_id(account_id: &AccountId) -> CryptoHash {
@@ -44,11 +57,18 @@ pub(crate) fn assert_one_yocto() {
         "Rqueries attached deposit of exactly 1 yoctoNEAR",
     )
 }
+// used to make sure the user attached exactly 1 yoctoNEAR
+pub(crate) fn assert_at_least_one_yocto() {
+    assert!(
+        env::attached_deposit() >= 1,
+        "Rqueries attached deposit of at least 1 yoctoNEAR",
+    )
+}
 // assert that the user has attached at least 1 yoctoNEAR(for security reasons and to pay for storage)
 pub(crate) fn assert_at_least_one_near() {
     assert!(
         env::attached_deposit() >= ONE_NEAR,
-        "Requires attached deposit of at least 1 yoctoNEAR.",
+        "Requires attached deposit of at least 0.1 NEAR.",
     )
 }
 

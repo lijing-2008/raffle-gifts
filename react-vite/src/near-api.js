@@ -25,6 +25,7 @@ export async function initContract() {
       // View methods are read only. They don't modify the state, but usually return some value.
       viewMethods: [
         'is_admin',
+        'admins',
         'nft_total_supply',
         'nft_token',
         'nft_tokens',
@@ -34,7 +35,13 @@ export async function initContract() {
         'nft_raffle_total_by_level',
       ],
       // Change methods can modify the state. But you don't receive the returned value when called.
-      changeMethods: ['nft_mint', 'nft_raffle', 'nft_transfer'],
+      changeMethods: [
+        'nft_mint',
+        'nft_raffle',
+        'nft_transfer',
+        'admin_add',
+        'admin_remove',
+      ],
     }
   )
 }
@@ -51,17 +58,44 @@ export function signInWithNearWallet() {
   // the private key in localStorage.
   window.walletConnection.requestSignIn(nearConfig.contractName)
 }
+// get account balance
 export async function getAccountBalance() {
   let amount = await window.walletConnection.account().getAccountBalance()
   return amount
 }
 
+// some action about admin
 export async function isAdmin() {
   let response = await window.contract.is_admin({
     account_id: window.walletConnection.getAccountId(),
   })
   return response
 }
+export async function getAllAdmins() {
+  let response = await window.contract.admins()
+  console.log('all admins:', response)
+  return response
+}
+export async function addAdmin(accountId) {
+  await window.contract.admin_add(
+    {
+      account_id: accountId,
+    },
+    '300000000000000', // attached GAS (optional)
+    ONE_NEAR
+  )
+}
+export async function removeAdmin(accountId) {
+  await window.contract.admin_remove(
+    {
+      account_id: accountId,
+    },
+    '300000000000000', // attached GAS (optional)
+    ONE_NEAR
+  )
+}
+
+// get total NFTs supplied by the contract
 export async function getTotalSupply() {
   let response = await window.contract.nft_total_supply()
   return response

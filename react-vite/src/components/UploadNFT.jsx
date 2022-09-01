@@ -41,7 +41,7 @@ export default function UploadNFT(props) {
   const [fileUrl, updateFileUrl] = useState('')
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
-  const { total } = props
+  const { total, admins } = props
 
   const [form] = Form.useForm()
 
@@ -119,18 +119,18 @@ export default function UploadNFT(props) {
   }
   return (
     <>
-      <div className="max-w-3xl flex relative m-auto">
-        <div className="z-0 bg-white opacity-20 w-full h-600px rounded-xl border-2 border-black shadow-dark-300"></div>
-        <div className="absolute w-330px h-50px top-50px left-210px text-2xl font-semibold italic">
+      <div className="max-w-2xl flex relative m-auto">
+        <div className="z-0 mt-3 bg-white opacity-20 w-full h-460px rounded-xl border-2 border-black shadow-dark-300"></div>
+        <div className="absolute w-330px h-50px top-20px left-180px text-2xl font-semibold italic">
           Mint NFT ( 历史Mint合计: {<i className="text-pink">{total}</i>} )
         </div>
-        <div className="absolute w-240px h-240px left-50px top-180px bg-gray-400">
+        <div className="absolute w-240px h-240px left-30px top-80px bg-gray-400">
           {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
         </div>
-        <div className="absolute w-240px h-100px left-50px top-440px ">
+        <div className="absolute w-240px h-100px left-30px top-340px ">
           <input className="bg-gray w-240px" type="file" onChange={onChange} />
         </div>
-        <div className="absolute z-10 w-350px h-400px left-350px top-180px">
+        <div className="absolute z-10 w-350px h-400px left-300px top-80px">
           <Form {...layout} s form={form} name="control-hooks">
             <Form.Item
               name="title"

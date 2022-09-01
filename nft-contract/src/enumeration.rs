@@ -2,9 +2,16 @@ use crate::*;
 
 #[near_bindgen]
 impl Contract {
-    // check if the caller is admin or not
-    pub fn is_admin(&self, account_id: &AccountId) -> bool {
-        self.admins.contains(&account_id)
+    // query all admins
+    pub fn admins(&self) -> Vec<AccountId> {
+        self.admins.to_vec()
+    }
+    // check account is admin or not
+    pub fn is_admin(&self, account_id: AccountId) -> u8 {
+        match self.admins.contains(&account_id) {
+            true => 1,
+            false => 0,
+        }
     }
 
     //Query for the total supply of NFTs on the contract

@@ -4,6 +4,7 @@ use near_sdk::json_types::{Base64VecU8, U128};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, Balance, CryptoHash, PanicOnDefault, Promise};
 
+pub use admin::*;
 pub use enumeration::*;
 pub use events::*;
 pub use internal::*;
@@ -12,6 +13,7 @@ pub use mint::*;
 pub use nft_core::*;
 pub use util::*;
 
+mod admin;
 mod enumeration;
 mod events;
 mod internal;
@@ -144,7 +146,7 @@ mod tests {
     }
 
     #[test]
-    fn mint_nft() {
+    fn nft() {
         let nft_metadata = NFTContractMetadata {
             spec: "nft-1.0.0".to_string(),
             name: "Raffle gifts Contract".to_string(),
@@ -189,8 +191,27 @@ mod tests {
         let sr_raffle_set = contract.raffle_tokens_per_level.get(&("SR".to_string()));
         assert!(sr_raffle_set.is_none());
 
+        // test admin_add
+        contract.admin_add(AccountId::try_from("li.testnet".to_string()).unwrap());
+        assert_eq!(
+            contract.admins(),
+            vec![
+                AccountId::try_from(TESTACCOUNTID.to_string()).unwrap(),
+                AccountId::try_from("li.testnet".to_string()).unwrap(),
+            ]
+        );
+        // test admin_remove
+        contract.admin_remove(AccountId::try_from("li.testnet".to_string()).unwrap());
+        assert_eq!(
+            contract.admins(),
+            vec![AccountId::try_from(TESTACCOUNTID.to_string()).unwrap(),]
+        );
 
-        //
+        // contract.admin_remove(AccountId::try_from(TESTACCOUNTID.to_string()).unwrap());
+        let res = contract.is_admin(AccountId::try_from(TESTACCOUNTID.to_string()).unwrap());
+        let res2 = contract.is_admin(AccountId::try_from("li.testnet".to_string()).unwrap());
+        assert_eq!(res, 1);
+        assert_eq!(res2, 0);
     }
 
     fn set_context(predecessor: &str, amount: Balance) {
