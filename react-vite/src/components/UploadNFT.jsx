@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Form, Input, Select, message, Modal, Divider } from 'antd'
+import { Form, Input, Select, message, Modal, Divider, Spin } from 'antd'
 import {
   makeGatewayURL,
   jsonFile,
@@ -25,27 +25,14 @@ const tailLayout = {
   },
 }
 
-const defaultMetadata = {
-  title: 'default title',
-  description: 'an special NFT',
-  media: '',
-  media_hash: '',
-  copies: 1,
-  issued_at: Date.now(),
-  expires_at: 0,
-  starts_at: 0,
-  updated_at: Date.now(),
-  extra: '',
-  reference: '',
-  reference_hash: '',
-}
 export default function UploadNFT(props) {
   const [fileUrl, updateFileUrl] = useState('')
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
-  const { total, nTotal, rTotal, srTotal, ssrTotal } = props
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [webToken, setWebToken] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const { total, nTotal, rTotal, srTotal, ssrTotal } = props
 
   const [form] = Form.useForm()
 
@@ -83,9 +70,12 @@ export default function UploadNFT(props) {
         name: 'nft-raffle',
         maxRetries: 3,
         onRootCidReady: (rootCid) => {
+          setUploading(true)
+          console.log(rootCid)
           setCid(rootCid)
         },
         onStoredChunk: (bytes) => {
+          setUploading(false)
           message.success(
             `upload file ${
               file.name
@@ -95,6 +85,7 @@ export default function UploadNFT(props) {
         },
       })
 
+      console.log('rootCid:', rootCid)
       const url = makeGatewayURL(rootCid, 'metadata.json')
       const res = await fetch(url)
       const metadata = await res.json()
@@ -161,8 +152,14 @@ export default function UploadNFT(props) {
             <div className=" w-240px h-240px bg-gray bg-[url(./src/assets/default.png)]">
               {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
             </div>
-            <div className=" w-240px h-100px mt-4 pl-8">
+            <div className="w-240px h-100px mt-4 pl-8">
               <input type="file" onChange={onChange} />
+              <Spin
+                spinning={uploading}
+                tip="uploading..."
+                size="large"
+                className="mt-4 ml-10"
+              />
             </div>
             <Modal
               title="Please input your Web3.storage Token before upload!"
