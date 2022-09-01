@@ -25,7 +25,7 @@ const tailLayout = {
   },
 }
 
-export default function UploadNFT(props) {
+export default function MintNFT(props) {
   const [fileUrl, updateFileUrl] = useState('')
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')

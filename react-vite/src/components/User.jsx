@@ -69,30 +69,10 @@ export default function User(props) {
   ]
   const content = (
     <div className="flex flex-col ">
-      <div>
-        <i className="italic font-bold text-xm text-white">total: </i>
-        <i className="font-semibold text-xm">
-          {utils.format.formatNearAmount(balance.total)}Ⓝ
-        </i>
-      </div>
-      <div>
-        <i className="italic font-bold text-xm text-white">available: </i>
-        <i className="font-semibold text-xm">
-          {utils.format.formatNearAmount(balance.available)}Ⓝ
-        </i>
-      </div>
-      <div>
-        <i className="italic font-bold text-xm text-white">stateStaked: </i>
-        <i className="font-semibold text-xm">
-          {utils.format.formatNearAmount(balance.stateStaked)}Ⓝ
-        </i>
-      </div>
-      <div>
-        <i className="italic font-bold text-xm text-white">staked: </i>
-        <i className="font-semibold text-xm">
-          {utils.format.formatNearAmount(balance.staked)}Ⓝ
-        </i>
-      </div>
+      <BalanceItem title="total" value={balance.total} />
+      <BalanceItem title="availabel" value={balance.available} />
+      <BalanceItem title="stateStaked" value={balance.stateStaked} />
+      <BalanceItem title="staked" value={balance.staked} />
       <div>
         <i className="italic font-bold text-xm text-white">totalNFTs: </i>
         <i className="font-semibold text-xm">{totalNFTByOwner}</i>
@@ -153,6 +133,18 @@ export default function User(props) {
           />
         </Badge>
       </Popover>
+    </div>
+  )
+}
+
+function BalanceItem(props) {
+  const { title, value } = props
+  return (
+    <div>
+      <i className="italic font-bold text-xm text-white">{title}: </i>
+      <i className="font-semibold text-xm">
+        {utils.format.formatNearAmount(value)}Ⓝ
+      </i>
     </div>
   )
 }
