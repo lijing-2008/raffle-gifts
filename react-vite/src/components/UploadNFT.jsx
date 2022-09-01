@@ -156,7 +156,7 @@ export default function UploadNFT(props) {
         <div className="absolute z-5 top-60px w-4/5 left-70px">
           <Divider className="bg-gray-400" />
         </div>
-        <div className="absolute flex justify-betweens w-full h-350px top-100px ">
+        <div className="absolute flex w-full h-350px top-100px ">
           <div className="ml-8">
             <div className=" w-240px h-240px bg-gray bg-[url(./src/assets/default.png)]">
               {fileUrl && <img src={fileUrl} width="240px" height="240px" />}
