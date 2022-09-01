@@ -36,9 +36,8 @@ export default function User(props) {
     await removeAdmin(item.accountId)
   }
   const onAddAdmin = (admin) => {
-    console.log(admin)
     addAdmin(admin)
-      .then(message.success(`add admin ${admin}`))
+      .then(message.loading(`add admin ${admin}`))
       .catch(message.error)
   }
   const dataSource = admins
@@ -147,7 +146,7 @@ export default function User(props) {
       >
         <Badge count={totalNFTByOwner}>
           <Avatar
-            className="transition duration-700 ease-in-out hover:scale-110"
+            className="transition duration-700 ease-in-out hover:scale-110 bg-gray-300"
             size={50}
             src={<Image src={avatarSrc} style={{ width: 50 }} />}
             alt="details"
