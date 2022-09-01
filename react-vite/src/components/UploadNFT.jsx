@@ -145,7 +145,7 @@ export default function UploadNFT(props) {
       <div className="max-w-2xl flex relative m-auto">
         <div className="z-0 mt-3 bg-white opacity-20 w-full h-460px rounded-xl border-2 border-black shadow-dark-300"></div>
 
-        <div className="absolute flex flex-between justify-center gap-x-10 w-400px h-50px top-20px left-150px italic">
+        <div className="absolute flex justify-center gap-x-10 w-400px h-50px top-20px left-150px italic">
           <CustomStatistic title="Total Mint" value={total} />
           <CustomStatistic
             title="Total Transfered"
