@@ -56,7 +56,7 @@ export default function UploadNFT(props) {
   }
 
   const handleCancel = () => {
-    message.warn('you didnot setting the web3 storage token')
+    message.warn("you haven't set the web3 storage token")
     setIsModalVisible(false)
   }
   const onWebTokenChanged = (e) => {

@@ -64,6 +64,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [
 - [NEAR Wallet Account](https://wallet.testnet.near.org)
 - [Rust Toolchain](https://docs.near.org/develop/prerequisites)
 - [Node](https://nodejs.org/en/)
+- [Web3.storage](https://web3.storage/)
 
 ## :checkered_flag: Starting
 
@@ -100,6 +101,9 @@ You need to login with administrator account id
 ![mintNFT.png](https://tva1.sinaimg.cn/large/e6c9d24egy1h5qvoeo90vj21440u0q7i.jpg)
 
 Select your NFT image from local directory, its media url will input automatically. Then input other necessary info. At last, click the Mint button to redirect to connect your wallet and confirm your transaction.
+if you haven't set your web3.storage token, you need to set it at first, when you select a pic there is a modal offer you for setting.
+
+![setWebToken.png](https://img1.imgtp.com/2022/09/01/lPlmMHzu.png)
 
 ### ☘️ Raffle NFTs
 
