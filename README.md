@@ -26,7 +26,7 @@
 
 ## :dart: About
 
-Welcome to Raffle Gifts, it is a NFT game inspired by Asphalt 8, and developed on NEAR Blockchain. The game offers two user roles. As an Aministrator, you can mint NFTs into the prize poll. As a normal user, you can draw NFTs with spending some NEARs.
+Welcome to Raffle Gifts, it is a NFT game inspired by Asphalt 8, and developed on NEAR Blockchain. The game offers two user roles. As an Administrator, you can mint NFTs into the prize poll. As a normal user, you can draw NFTs with spending some NEARs.
 
 ## :sparkles: Features
 
