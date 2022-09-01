@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Form, Input, Select, message, Statistic, Divider } from 'antd'
-import { makeGatewayURL, jsonFile } from '../util/utils'
+import { Form, Input, Select, message, Modal, Divider } from 'antd'
+import {
+  makeGatewayURL,
+  jsonFile,
+  getSavedWebToken,
+  saveWebToken,
+} from '../util/utils'
 import { mintNft } from '../near-api'
 import CustomStatistic from './CustomStatistic'
 const { Option } = Select
@@ -20,10 +25,6 @@ const tailLayout = {
   },
 }
 
-const client = new Web3Storage({
-  token:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEM1NDc1YzYzOWE3RDE3ZTJDNzQwYkVBNEIwMDU0QTU5RGNBNkYyNjUiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjE0ODk4NDQwMzgsIm5hbWUiOiJuZWFyLW5mdCJ9.6G6mvnEcnFA7PvDgarIDpwXHxJQTY-eBXLykYb7oQ2c',
-})
 const defaultMetadata = {
   title: 'default title',
   description: 'an special NFT',
@@ -43,41 +44,63 @@ export default function UploadNFT(props) {
   const [cid, setCid] = useState('')
   const [nftTitle, setNftTitle] = useState('')
   const { total, nTotal, rTotal, srTotal, ssrTotal } = props
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [webToken, setWebToken] = useState('')
 
   const [form] = Form.useForm()
 
+  const handleOk = () => {
+    saveWebToken(webToken)
+    message.success('setting web3 storage token successfully!')
+    setIsModalVisible(false)
+  }
+
+  const handleCancel = () => {
+    message.warn('you didnot setting the web3 storage token')
+    setIsModalVisible(false)
+  }
+  const onWebTokenChanged = (e) => {
+    setWebToken(e.target.value)
+  }
+
   //upload image function
   async function onChange(e) {
-    const file = e.target.files[0]
+    let token = getSavedWebToken()
+    if (!token) {
+      setIsModalVisible(true)
+    } else {
+      const client = new Web3Storage({
+        token,
+      })
+      const file = e.target.files[0]
 
-    const metadataFile = jsonFile('metadata.json', {
-      path: file.name,
-      caption: 'test description',
-    })
+      const metadataFile = jsonFile('metadata.json', {
+        path: file.name,
+        caption: 'test description',
+      })
 
-    const rootCid = await client.put([file, metadataFile], {
-      name: 'nft-raffle',
-      maxRetries: 3,
-      onRootCidReady: (rootCid) => {
-        console.log('root cid: ', rootCid)
-        setCid(rootCid)
-      },
-      onStoredChunk: (bytes) => {
-        message.success(
-          `upload file ${
-            file.name
-          } successfully,  sent ${bytes.toLocaleString()} bytes to web3.storage`,
-          6
-        )
-      },
-    })
+      const rootCid = await client.put([file, metadataFile], {
+        name: 'nft-raffle',
+        maxRetries: 3,
+        onRootCidReady: (rootCid) => {
+          setCid(rootCid)
+        },
+        onStoredChunk: (bytes) => {
+          message.success(
+            `upload file ${
+              file.name
+            } successfully,  sent ${bytes.toLocaleString()} bytes to web3.storage`,
+            6
+          )
+        },
+      })
 
-    const url = makeGatewayURL(rootCid, 'metadata.json')
-    const res = await fetch(url)
-    console.log('res', res)
-    const metadata = await res.json()
-    const gatewayURL = makeGatewayURL(rootCid, metadata.path)
-    updateFileUrl(gatewayURL)
+      const url = makeGatewayURL(rootCid, 'metadata.json')
+      const res = await fetch(url)
+      const metadata = await res.json()
+      const gatewayURL = makeGatewayURL(rootCid, metadata.path)
+      updateFileUrl(gatewayURL)
+    }
   }
   useEffect(() => {
     form.setFieldValue('mediaUrl', fileUrl)
@@ -102,7 +125,6 @@ export default function UploadNFT(props) {
       reference: '',
       reference_hash: '',
     }
-    console.log(metadata)
     const tokenLevel = form.getFieldValue('level')
     await mintNft(metadata, tokenLevel)
   }
@@ -142,6 +164,14 @@ export default function UploadNFT(props) {
             <div className=" w-240px h-100px mt-4 pl-8">
               <input type="file" onChange={onChange} />
             </div>
+            <Modal
+              title="Please input your Web3.storage Token before upload!"
+              visible={isModalVisible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Input.TextArea value={webToken} onChange={onWebTokenChanged} />
+            </Modal>
           </div>
           <div className="ml-4">
             <div className="z-10 w-350px h-400px ">

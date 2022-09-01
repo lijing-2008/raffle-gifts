@@ -73,7 +73,6 @@ export async function isAdmin() {
 }
 export async function getAllAdmins() {
   let response = await window.contract.admins()
-  console.log('all admins:', response)
   return response
 }
 export async function addAdmin(accountId) {

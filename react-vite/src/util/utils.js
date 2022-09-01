@@ -17,3 +17,28 @@ export function makeGatewayURL(cid, path) {
 export function jsonFile(filename, obj) {
   return new File([JSON.stringify(obj)], filename)
 }
+
+/**
+ * Get the Web3 storage token.
+ *
+ * @return {string}
+ */
+export function getSavedWebToken() {
+  return localStorage.getItem('web3storage-token')
+}
+
+/**
+ * saves token to local storage
+ *
+ * @export
+ * @param {string} token
+ */
+export function saveWebToken(token) {
+  localStorage.setItem('web3storage-token', token)
+}
+/**
+ * Removes any saved token from local storage
+ */
+export function deleteSavedToken() {
+  localStorage.removeItem('w3storage-token')
+}
