@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
 import NftCard from './NftCard'
-import { Tag } from 'antd'
+import { Result, Tag } from 'antd'
 import {
   BarChartOutlined,
   CaretDownOutlined,
   CaretUpOutlined,
+  SmileOutlined,
 } from '@ant-design/icons'
 
 export default function ListShow(props) {
@@ -48,11 +49,19 @@ export default function ListShow(props) {
       </div>
 
       {/* nft list */}
-      <div className="flex flex-wrap select-none h-full gap-x-5 gap-y-5 pt-10 px-10 justify-center">
-        {data.map((item, index) => {
-          return <NftCard item={item} key={index} />
-        })}
-      </div>
+      {data.length > 0 ? (
+        <div className="flex flex-wrap select-none h-full gap-x-5 gap-y-5 pt-10 px-10 justify-center">
+          {data.map((item, index) => {
+            return <NftCard item={item} key={index} />
+          })}
+        </div>
+      ) : (
+        <Result
+          icon={<SmileOutlined />}
+          title={<h3 className="text-gray">Sorry, there is Nothing left.</h3>}
+          status="warning"
+        />
+      )}
     </div>
   )
 }

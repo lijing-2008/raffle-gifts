@@ -240,20 +240,34 @@ impl Contract {
         self.internal_remove_token_from_owner(&token.owner_id, token_id);
         // add the token to the receiver
         self.internal_add_token_to_owner(receiver_id, token_id);
-        // if the token'owner in admin, remove the token from raffle collection
-        let tokens_set = self
-            .raffle_tokens_per_level
-            .get(&token.level)
-            .expect("No token.");
-        let mut token_index = None;
-        for i in 0..tokens_set.len() {
-            if tokens_set.get(i).unwrap() == *token_id {
-                token_index = Some(i)
-            } else {
-                continue;
+        // if the token'owner is an administrator,and the receiver is not an administrator
+        // remove the token from raffle collection
+        if self.admins().contains(&token.owner_id) {
+            if !self.admins().contains(receiver_id) {
+                let tokens_set = self
+                    .raffle_tokens_per_level
+                    .get(&token.level)
+                    .expect("No token.");
+                let mut token_index = None;
+                for i in 0..tokens_set.len() {
+                    if tokens_set.get(i).unwrap() == *token_id {
+                        token_index = Some(i)
+                    } else {
+                        continue;
+                    }
+                }
+                // if token in the prize pool, remove from the the prize pool
+                if let Some(index) = token_index {
+                    self.internal_remove_token_from_raffle(token_id, index);
+                }
+            }
+        } else {
+            // if sender_id is not admin, but the receiver_id is admin
+            // add the token to the raffle prize pool
+            if self.admins().contains(receiver_id) {
+                self.internal_add_token_to_raffle(&(token.level), token_id)
             }
         }
-        self.internal_remove_token_from_raffle(token_id, token_index.unwrap());
 
         let new_token = Token {
             owner_id: receiver_id.clone(),

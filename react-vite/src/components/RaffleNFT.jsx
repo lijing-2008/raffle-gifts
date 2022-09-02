@@ -1,6 +1,8 @@
 import React from 'react'
 import ChoiseGroup from './ChoiseGroup'
 import NftCard from './NftCard'
+import { Result } from 'antd'
+import { SmileOutlined } from '@ant-design/icons'
 
 export default function RaffleNFT({ listForOwnerFromBlockchain }) {
   return (
@@ -20,7 +22,12 @@ export default function RaffleNFT({ listForOwnerFromBlockchain }) {
             }
           />
         ) : (
-          ''
+          <Result
+            className="w-60"
+            icon={<SmileOutlined />}
+            title={<h3 className="text-gray">You don't have anyone.</h3>}
+            status="warning"
+          />
         )}
       </div>
     </div>
