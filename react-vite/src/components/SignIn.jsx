@@ -1,12 +1,5 @@
 import React from 'react'
 import { signInWithNearWallet } from '../near-api'
-import NftCard from './NftCard'
-const logo = {
-  url: 'https://bafybeig2xtoqzxbacyzz5iwy3nvxrsap4akrjvakbcyyvx4lbdnevzeely.ipfs.w3s.link/coder-avater.png',
-  name: 'suprise',
-  description: 'congratulations..',
-  price: '50 Ⓝ',
-}
 export default function SignIn() {
   return (
     <div className="min-h-screen pt-60  bg-[url(./src/assets/bg.png)] bg-no-repeat bg-cover">

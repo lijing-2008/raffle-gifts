@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Admin from './components/Admin'
-import Balance from './components/User'
 import Banner from './components/Banner'
-import ChoiseGroup from './components/ChoiseGroup'
 import ListShow from './components/ListShow'
-import NftCard from './components/NftCard'
 import SignIn from './components/SignIn'
 import MintNFT from './components/MintNFT'
 import {
@@ -16,7 +12,6 @@ import {
   getRaffleTokensTotalByLevel,
   getTotalSupply,
   isAdmin,
-  signOutNearWallet,
 } from './near-api'
 import User from './components/User'
 import RaffleNFT from './components/RaffleNFT'
@@ -91,10 +86,6 @@ function App() {
   useEffect(() => {
     isAdmin().then(setEnableMint).catch(console.log)
   }, [])
-  const onTest = () => {
-    isAdmin().then(setEnableMint).catch(console.log)
-    // getAllAdmins().then(console.log).catch(console.log)
-  }
 
   if (!window.walletConnection.isSignedIn()) {
     // Sign-in flow will reload the page later

@@ -2,9 +2,6 @@ import React from 'react'
 
 export default function Banner(props) {
   const { accountId } = props
-  const onClick = () => {
-    window.open('')
-  }
   return (
     <div className="fixed top-0 left-0 right-0 z-10 flex flex-between h-65px bg-pink-600">
       <div className="flex flex-1 justify-center items-center text-gray-300">
